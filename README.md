@@ -35,3 +35,10 @@ Run:
 ```shell
 docker-compose up --detach qemu-guest-agent
 ```
+
+## Kubernetes DaemonSet
+
+```shell
+kubectl apply --filename \
+    https://raw.githubusercontent.com/robinelfrink/docker-qemu-guest-agent/main/manifests/daemonset.yaml
+```

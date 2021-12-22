@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: qemu-guest-agent
+  name: qemu-guest-agent
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: qemu-guest-agent
+  template:
+    metadata:
+      labels:
+        app: qemu-guest-agent
+    spec:
+      containers:
+      - image: ghcr.io/robinelfrink/qemu-guest-agent:latest
+        imagePullPolicy: Always
+        name: qemu-guest-agent
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /dev/virtio-ports/org.qemu.guest_agent.0
+          name: virtio-port
+      priorityClassName: system-cluster-critical
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /dev/virtio-ports/org.qemu.guest_agent.0
+        name: virtio-port
