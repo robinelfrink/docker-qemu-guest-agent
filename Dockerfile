@@ -12,7 +12,4 @@ COPY --from=build \
     /lib/x86_64-linux-gnu/libpcre.so.* \
     /lib/x86_64-linux-gnu/
 
-ENV METHOD=virtio-serial
-ENV PATH=/dev/virtio-ports/org.qemu.guest_agent.0
-
 CMD ["/usr/sbin/qemu-ga", "--method", "virtio-serial", "--path", "/dev/virtio-ports/org.qemu.guest_agent.0"]
