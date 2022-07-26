@@ -32,7 +32,7 @@ jobs:
         id: name
         with:
           value: ${{ github.event.repository.name }}
-          regex: ^docker-
+          regex: ^.*/docker-
           replacement: ""
       - name: Release
         uses: ncipollo/release-action@v1
