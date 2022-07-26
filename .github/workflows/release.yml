@@ -1,9 +1,9 @@
-name: Container
+name: Release
 
 on:
   push:
     paths:
-      - .github/workflows/container.yml
+      - .github/workflows/release.yml
       - Dockerfile
     branches:
       - main
