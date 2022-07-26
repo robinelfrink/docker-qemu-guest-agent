@@ -44,9 +44,9 @@ jobs:
           generateReleaseNotes: true
       - name: Build
         if: steps.version.outputs.changed
-        uses: aevea/action-kaniko@master
+        uses: aevea/action-kaniko@v0.9.0
         with:
-          image: ${{ github.repository_owner }}/${{ steps.name.outputs.value }}
+          image: ${{ steps.name.outputs.value }}
           tag: ${{ steps.version.outputs.version_tag }}
           tag_with_latest: true
           registry: ghcr.io
