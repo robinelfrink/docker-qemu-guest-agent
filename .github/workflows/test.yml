@@ -1,0 +1,22 @@
+name: Test
+
+on: pull_request
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Build
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: false
+          tags: |
+            ghcr.io/test:test
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
