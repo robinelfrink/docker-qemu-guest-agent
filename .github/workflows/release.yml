@@ -17,24 +17,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Version
-        uses: paulhatch/semantic-version@v4.0.3
+      - name: Bump version and tag
+        uses: mathieudutour/github-tag-action@v6.0
         id: version
         with:
-          tag_prefix: v
-          major_pattern: /breaking/
-          minor_pattern: /feat(ure)?/
-          format: "${major}.${minor}.${patch}"
-          change_path: Dockerfile
-          short_tags: false
-      - name: Release
-        uses: ncipollo/release-action@v1
-        if: steps.version.outputs.changed
-        with:
-          allowUpdates: true
-          tag: ${{ steps.version.outputs.version_tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generateReleaseNotes: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
       - name: Name
         uses: ashley-taylor/regex-property-action@1.2
         id: name
@@ -54,7 +42,13 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ steps.name.outputs.value }}:${{ steps.version.outputs.version_tag }}
+            ghcr.io/${{ steps.name.outputs.value }}:${{ steps.version.outputs.new_tag }}
             ghcr.io/${{ steps.name.outputs.value }}:latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.version.outputs.new_tag }}
+          name: Release ${{ steps.version.outputs.new_tag }}
+          body: ${{ steps.version.outputs.changelog }}
