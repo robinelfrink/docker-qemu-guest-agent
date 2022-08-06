@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    paths:
+      - .github/workflows/release.yml
+      - Dockerfile
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Version
+        uses: paulhatch/semantic-version@v4.0.3
+        id: version
+        with:
+          tag_prefix: v
+          major_pattern: /breaking/
+          minor_pattern: /feat(ure)?/
+          format: "${major}.${minor}.${patch}"
+          change_path: Dockerfile
+          short_tags: false
+      - name: Release
+        uses: ncipollo/release-action@v1
+        if: steps.version.outputs.changed
+        with:
+          allowUpdates: true
+          tag: ${{ steps.version.outputs.version_tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
+      - name: Name
+        uses: ashley-taylor/regex-property-action@1.2
+        id: name
+        with:
+          value: ${{ github.repository }}
+          regex: /docker-
+          replacement: "/"
+      - name: Log in
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ steps.name.outputs.value }}:${{ steps.version.outputs.version_tag }}
+            ghcr.io/${{ steps.name.outputs.value }}:latest
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
