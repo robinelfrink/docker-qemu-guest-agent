@@ -1,10 +1,13 @@
-name: Test
+name: Test container
 
-on: pull_request
+on: 
+  pull_request:
+    paths:
+      - Dockerfile
 
 jobs:
   test:
-    name: Test
+    name: Test container
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

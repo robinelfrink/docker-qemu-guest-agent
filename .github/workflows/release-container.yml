@@ -1,16 +1,15 @@
-name: Release
+name: Release container
 
 on:
   push:
     paths:
-      - .github/workflows/release.yml
       - Dockerfile
     branches:
       - main
 
 jobs:
   release:
-    name: Release
+    name: Release container
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
