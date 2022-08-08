@@ -1,0 +1,51 @@
+name: Release Helm chart
+
+on:
+  push:
+    paths:
+      - charts/**
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release Helm chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Bump version and tag
+        uses: TriPSs/conventional-changelog-action@v3
+        id: version
+        with:
+          github-token: ${{ secrets.github_token }}
+          output-file: false
+          tag-prefix: helm-chart-v
+      - name: Name
+        uses: ashley-taylor/regex-property-action@1.2
+        id: name
+        with:
+          value: ${{ github.repository }}
+          regex: ".*/docker-"
+          replacement: ""
+      - name: Update Chart.yaml
+        run: |
+          sed -i 's/^version: .*/version: ${{ steps.version.outputs.version }}/' charts/${{ steps.name.outputs.value }}/Chart.yaml
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.4.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.version.outputs.tag }}
+          name: Helm chart ${{ steps.version.outputs.tag }}
+          body: ${{ steps.version.outputs.clean_changelog }}

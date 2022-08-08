@@ -42,3 +42,8 @@ docker-compose up --detach qemu-guest-agent
 kubectl apply --filename \
     https://raw.githubusercontent.com/robinelfrink/docker-qemu-guest-agent/main/manifests/daemonset.yaml
 ```
+
+## Kubernetes Helm chart
+
+See [charts/qemu-guest-agent/README.md](charts/qemu-guest-agent/README.md) how
+to install `qemu-guest-agent` using [Helm](https://helm.sh/).
