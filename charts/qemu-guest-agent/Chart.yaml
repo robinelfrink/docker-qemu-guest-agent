@@ -1,0 +1,10 @@
+apiVersion: v2
+name: qemu-guest-agent
+description: A Helm chart for qemu-guest-agent
+type: application
+version: 0.0.0
+appVersion: "v0.0.0"
+home: https://github.com/robinelfrink/docker-qemu-guest-agent
+icon: https://gitlab.com/qemu-project/qemu/-/raw/master/ui/icons/qemu.svg
+maintainers:
+  - name: robinelfrink
