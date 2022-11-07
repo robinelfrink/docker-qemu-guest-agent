@@ -35,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Name
-        uses: ashley-taylor/regex-property-action@1.2
+        uses: ashley-taylor/regex-property-action@v1.4
         id: name
         with:
           value: ${{ github.repository }}
