@@ -1,4 +1,4 @@
-FROM alpine:3.17.0 AS build
+FROM alpine:3.17.1 AS build
 RUN mkdir -p /build/etc/apk /build/var/run /empty
 RUN cp -r /etc/apk/* /build/etc/apk/
 RUN apk add --no-cache --initdb -p /build qemu-guest-agent musl
