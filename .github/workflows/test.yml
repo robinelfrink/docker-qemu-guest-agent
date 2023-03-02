@@ -4,6 +4,20 @@ on: pull_request
 
 jobs:
 
+  tag:
+    name: Calculate next tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Calculate tag
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          dry_run: true
+          github_token: ${{ secrets.github_token }}
+
   build:
     name: Build container
     runs-on: ubuntu-latest
