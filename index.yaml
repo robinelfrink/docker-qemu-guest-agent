@@ -2,6 +2,20 @@ apiVersion: v1
 entries:
   qemu-guest-agent:
   - apiVersion: v2
+    appVersion: v0.3.1
+    created: "2023-03-02T21:18:09.622297439Z"
+    description: A Helm chart for qemu-guest-agent
+    digest: 4092adc101aadbe243c139db4ca1de9eea1ec4982be7a5b09ae4d193afa56c1e
+    home: https://github.com/robinelfrink/docker-qemu-guest-agent
+    icon: https://gitlab.com/qemu-project/qemu/-/raw/master/ui/icons/qemu.svg
+    maintainers:
+    - name: robinelfrink
+    name: qemu-guest-agent
+    type: application
+    urls:
+    - https://robinelfrink.github.io/docker-qemu-guest-agent/qemu-guest-agent-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
     appVersion: v0.3.0
     created: "2022-08-12T08:06:53.424391272Z"
     description: A Helm chart for qemu-guest-agent
@@ -15,4 +29,4 @@ entries:
     urls:
     - https://robinelfrink.github.io/docker-qemu-guest-agent/qemu-guest-agent-0.3.0.tgz
     version: 0.3.0
-generated: "2022-08-12T08:06:53.42312325Z"
+generated: "2023-03-02T21:18:09.621033365Z"
