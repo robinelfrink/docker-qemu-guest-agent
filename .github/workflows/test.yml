@@ -53,7 +53,7 @@ jobs:
         with:
           version: v3.9.2
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.2.1
+        uses: helm/chart-testing-action@v2.4.0
       - name: Run chart-testing
         run: ct lint --all --check-version-increment=false --target-branch ${{ github.event.pull_request.base.ref }}
 
