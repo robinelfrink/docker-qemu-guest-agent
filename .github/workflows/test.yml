@@ -71,7 +71,7 @@ jobs:
           version: v3.9.2
       - name: Run unit tests
         run: |
-          helm plugin install https://github.com/quintush/helm-unittest
+          helm plugin install https://github.com/helm-unittest/helm-unittest --version v0.3.3
           for chart in charts/*; do
-              helm unittest --helm3 ${chart}
+              helm unittest ${chart}
           done
