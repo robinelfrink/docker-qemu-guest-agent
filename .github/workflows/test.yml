@@ -17,6 +17,7 @@ jobs:
         with:
           dry_run: true
           github_token: ${{ secrets.github_token }}
+          custom_release_rules: chore:patch:Chores
 
   build:
     name: Build container
