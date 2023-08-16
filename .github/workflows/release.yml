@@ -24,6 +24,7 @@ jobs:
         id: tag
         with:
           github_token: ${{ secrets.github_token }}
+          custom_release_rules: chore:patch:Chores
 
   container:
     name: Build and push container
